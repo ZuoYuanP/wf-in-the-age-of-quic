@@ -1,29 +1,29 @@
 # Website Fingerprinting in the Age of QUIC
 
-This repository contains the code for the paper "Website Fingerprinting in the Age of QUIC" (PETS 2021).
+代码来自论文 "Website Fingerprinting in the Age of QUIC" (PETS 2021).
 
-The code is divided into "workflows" with each workflow responsible for one or a few related experiments.
-Each workflow contains the scripts for collecting and processing data, performing machine learning classification, and generating plots for the paper.
+代码被分成workflows,一个workflows负责一个或几个相关实验，
+每个workflows都包含用于收集和处理数据、执行机器学习分类以及为论文生成图表的脚本。
 
 ## Data Availability Statements
 
 The data used to support this paper are provided in two sets:
 
 - [**quic-wf-core.tgz (831 MB)**](https://polybox.ethz.ch/index.php/s/u10mAN6NCcDP39U):
-  - The domains used for scanning and the scan results in CSV format with headers.
-  - The open-world-dataset in HDF5 format with class, protocol, and VPN location labels; arrays of sizes and timestamps; and packets below 175 bytes removed.  
+  - 用于扫描的域名和以CSV格式提供的带有headers的扫描结果；
+  - 具有class、protocol和 VPN 位置标签的 HDF5 格式的数据集; size和timestamp数组；低于175字节的数据包被移除；
 - **quic-wf-raw.tar (28 GB)**:
-  - The raw fetch QUIC and TCP traces and their associated metadata.
-  - Each file is a JSON stream of objects with the following, possible null-valued, keys:
+  - 原始获取的QUIC和TCP跟踪及其关联的元数据.
+  - 每个文件都是一个JSON对象流，包含以下可能为空值的键:
     - *url, final_url*: requested and final redirected URLs
     - *status*: HTTP status code of the fetch
     - *protocol*: protocol used to request the main page, "quic" or "tcp"
     - *packets*: base64 encoded PCAP for the request
     - *http_trace*: Chromium DevTools performance log ([reference](https://chromedevtools.github.io/devtools-protocol/tot/Network/))
-  - Due to the size, this is only available upon request.
+  - 由于大小限制，此内容仅根据请求提供。.
   - **New 2022-01-24**: Also available in [**pcapml**](https://nprint.github.io/pcapml.html) format upon request!
 
-> **Note:** A QUIC trace in the dataset refers to a trace of a Wireguard tunnel containing a mixture of QUIC and TCP packets associated with requesting the web-page over a QUIC connection. This means that at the least the initial connection to the web-server is over QUIC.
+> **Note:** 数据集中的QUIC trace是指一种包含了QUIC和TCP数据包的Wireguard隧道的跟踪，这些数据包与通过QUIC连接请求网页相关。这意味着至少与Web服务器建立的初始连接是通过QUIC完成的
 
 ## Computational Requirements
 
@@ -41,17 +41,17 @@ The data used to support this paper are provided in two sets:
 
 ### Memory and Runtime Requirements
 
-The code was last run on a computing cluster with each experiment running on 2&ndash;4 cores (each 2.4 GHz), 6 GB main memory per core.
-Machine learning training and testing used an additional 0&ndash;2 GPUs based on the classifier.
-These jobs were run in parallel to reduce runtime, with each train-test split requiring 1&ndash;3 hours.
+该代码最后在一个计算集群上运行，每个实验在2-4个核心上运行（每个核心2.4 GHz），每个核心配备6 GB主内存。
+机器学习的训练和测试使用了额外的0-2个基于分类器的GPU。
+为了减少运行时间，这些作业是并行运行的，每个训练-测试拆分需要1-3小时。
 
-**Note:** The current `requirements.txt` specifies tensorflow-cpu. If you have access to a GPU then install tensorflow-gpu instead.
+**Note:** 当前的 requirements.txt 文件指定了使用 tensorflow-cpu。如果你有 GPU 可以使用的话，请安装 tensorflow-gpu 替代.
 
 ## Getting Started
 
-A virutal box image with code and data already downloaded is currently available at this [**link**](https://polybox.ethz.ch/index.php/s/YGYX4qNu9hxUpvn) for quick access.
+一个包含已下载代码和数据的虚拟机镜像当前可通过此 [**link**](https://polybox.ethz.ch/index.php/s/YGYX4qNu9hxUpvn)快速访问.
 
-The instructions below describe how setup and run the workflow from scratch.
+下说明描述了如何从头开始设置和运行workflows.
 
 #### 1. Clone the repository and change to the directory.
 
@@ -96,8 +96,7 @@ If planning to run trace-collection, i.e. from the [Fetch QUIC Traces] workflow,
 #### 6. Run the desired workflow
 Change to the desired workflow's directory and follow the instructions for running the workflow.
 
-## Mapping of Paper Sections to Workflows
-The workflows responsible for the various sections of the paper are mapped below.
+## workflows和论文的对应章节
 
 | Paper Section | Workflows | Directories |
 |-------------------------------|----------|-----------|
@@ -109,8 +108,8 @@ The workflows responsible for the various sections of the paper are mapped below
 
 ## List of Tables and Programs
 
-The following table lists the programs and files responsible for the various tables and figures found in the paper.
-Notebooks are located in the `notebooks/` directory and outputs in the `results/plots` directory **relative to the associated workflow**.
+下表列出了负责论文中各个表格和图形的程序和文件。
+Notebooks位于notebooks/目录中，输出文件位于results/plots目录中 **relative to the associated workflow**.
 
 | Figure/Table   | Workflow                    | Notebook                                 | Output file                            |
 |----------------|-----------------------------|------------------------------------------|----------------------------------------|
